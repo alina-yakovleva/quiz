@@ -2,14 +2,15 @@ import { ListItemText, Typography } from "@mui/material";
 
 import { FC } from "react";
 import { IQuestion } from "../type";
+import { QuestionAnswerMap } from "./MainPage";
 
 interface ShowScoreProps {
   questions: IQuestion[];
   resultScore: number | null;
+  map: QuestionAnswerMap;
 }
-// correctAnswerId === AnswerId  ? 'green' : data[1] === AnswerId ? 'red' : ''
 
-const ShowScore: FC<ShowScoreProps> = ({ questions, resultScore }) => {
+const ShowScore: FC<ShowScoreProps> = ({ questions, resultScore, map }) => {
   return (
     <>
       <Typography variant="h3">Тест завершен</Typography>
@@ -19,13 +20,17 @@ const ShowScore: FC<ShowScoreProps> = ({ questions, resultScore }) => {
 
       {questions.map((question) => (
         <>
-          <ListItemText>{question.text}</ListItemText>
+          <ListItemText>Вопрос:{question.text}</ListItemText>
           <ListItemText>
             {question.answers.map((answer) => (
               <ListItemText
                 style={{
-                  backgroundColor:
-                    question.correctAnswerId === answer.id ? "green" : " ",
+                  border:
+                    question.correctAnswerId === answer.id
+                      ? "3px solid green"
+                      : map[question.id] === answer.id
+                      ? "3px solid red"
+                      : "",
                 }}
               >
                 {answer.text}

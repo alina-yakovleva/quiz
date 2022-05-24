@@ -11,17 +11,27 @@ import Answer from "../components/Answer";
 import { Content, Number, Question, Answers, Navigation } from "../styles";
 import ShowScore from "./ShowScore";
 
+export interface QuestionAnswerMap {
+  [key: number]: number;
+}
+
 const MainPage: FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [resultScore, setResultscore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [map, setMap] = useState<QuestionAnswerMap>({});
+
+  const questionId = QUESTIONS[currentQuestion].id;
+
   const correctAnswerId = QUESTIONS[currentQuestion].correctAnswerId;
 
   const handleClick = (id: number) => {
+    const newMap = { ...map, [questionId]: id };
+
     if (id === correctAnswerId) {
       setResultscore(resultScore + 1);
     }
-
+    setMap(newMap);
     const nextQuestion = currentQuestion + 1;
 
     if (nextQuestion < QUESTIONS.length) {
@@ -54,6 +64,7 @@ const MainPage: FC = () => {
           key={QUESTIONS[currentQuestion].id}
           resultScore={resultScore}
           questions={QUESTIONS}
+          map={map}
         />
       ) : (
         <>
@@ -70,7 +81,7 @@ const MainPage: FC = () => {
                 <Answer
                   key={answer.id}
                   answer={answer}
-                  handleClick={handleClick}
+                  handleClick={() => handleClick(answer.id)}
                 />
               ))}
             </Answers>

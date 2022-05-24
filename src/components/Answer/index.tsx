@@ -11,7 +11,7 @@ import { IAnswer } from "../../type";
 
 interface AnswersProps {
   answer: IAnswer;
-  handleClick: (id: number) => void;
+  handleClick: () => void;
 }
 
 const Answer: FC<AnswersProps> = ({ answer, handleClick }) => {
@@ -22,9 +22,7 @@ const Answer: FC<AnswersProps> = ({ answer, handleClick }) => {
           textAlign: "center",
         }}
       >
-        <ListItemText onClick={() => handleClick(answer.id)}>
-          {answer.text}
-        </ListItemText>
+        <ListItemText onClick={handleClick}>{answer.text}</ListItemText>
       </ListItemButton>
     </List>
   );
