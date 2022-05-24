@@ -14,11 +14,12 @@ export const Container = styled(Paper)({
   margin: "0 auto",
 
   width: "700px",
-  minHeight: "400px",
+  maxHeight: "760px",
 
   padding: "30px",
 
   color: "#1976d2",
+  overflowY: "auto",
 });
 
 export const Section = styled(Box)({
